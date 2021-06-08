@@ -1,22 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('../_partials/_head.ejs') %>
+  <main class="fl-main">
+    <div class="fl-container">
+      <h1>All User Feed</h1>
+      <section class="fl-photos-feed">
+        <% posts.forEach(post=> { %>
+          <section class="fl-photo">
+            <span class="fl-image"><a href="/posts/<%= post._id %>" title="<%= post.title %>">
+                <img src="<%= post.link %>" alt="<%= post.title %>" /></a>
+            </span>
+          </section>
+          <% }) %>
+      </section>
+    </div>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
 
-<body>
-  <h1>All User Feed</h1>
-  <ul>
-    <% posts.forEach(post=> { %>
-      <li>
-        <a href="/posts/<%= post._id %>"><img src="<%= post.link %>" width="300" /></a>
-      </li>
-      <% }) %>
-  </ul>
-</body>
+  </main>
 
-</html>
+  <%- include('../_partials/_foot.ejs') %>

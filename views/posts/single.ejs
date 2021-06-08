@@ -1,31 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('../_partials/_head.ejs') %>
+  <main class="fl-main">
+    <section class="fl-card fl-card-single">
+      <span class="fl-image">
+        <img src="<%= post.link %>" width="300" />
+      </span>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
+      <h1>
+        <%= post.title %>
+      </h1>
+      <p>
+        <%= post.body %>
+          <form method="post" action="/posts/<%= post._id %>/like">
+            <input name="likes" type="hidden" value="<%= post.likes %>" />
+            <button class="btn btn-outline-primary"><i class="fas fa-heart"></i> Like (<%= post.likes %>)</button>
+          </form>
+      </p>
+      <% if (user._id.toString()==post.user_id) { %>
+        <form method="post" action="/posts?_method=DELETE">
+          <input name="id" type="hidden" value="<%= post._id %>" />
+          <button class="btn btn-outline-danger"><i class="fas fa-times"></i> Delete</button>
+        </form>
+        <% } %>
+    </section>
 
-<body>
-  <img src="<%= post.link %>" width="300" />
-  <h1>
-    <%= post.title %>
-  </h1>
-  <p>
-    <%= post.body %>
-      <form method="post" action="/posts/<%= post._id %>/like">
-        <input name="likes" type="hidden" value="<%= post.likes %>" />
-        <button>Like (<%= post.likes %>)</button>
-      </form>
-  </p>
-  <% if (user._id.toString()==post.user_id) { %>
-    <form method="post" action="/posts?_method=DELETE">
-      <input name="id" type="hidden" value="<%= post._id %>" />
-      <button>Delete</button>
-    </form>
-    <% } %>
-</body>
 
-</html>
+  </main>
+
+  <%- include('../_partials/_foot.ejs') %>

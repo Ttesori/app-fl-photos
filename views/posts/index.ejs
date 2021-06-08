@@ -1,36 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('../_partials/_head.ejs') %>
+  <main class="fl-main">
+    <div class="fl-container">
+      <h1>My Feed</h1>
+      <div class="fl-photos-feed">
+        <% posts.forEach(post=> { %>
+          <section class="fl-photo">
+            <span class="fl-image">
+              <a href="/posts/<%= post._id %>"><img src="<%= post.link %>" width="300" /></a>
+            </span>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
+          </section>
+          <% }) %>
+      </div>
 
-<body>
-  <a href="/logout">Log Out</a>
-  <a href="/posts/feed">Feed</a>
-  <h1>User Home</h1>
-  <h2>User Posts</h2>
-  <ul>
-    <% posts.forEach(post=> { %>
-      <> <a href="/posts/<%= post._id %>"><img src="<%= post.link %>" width="300" /></a>
-        <form method="post" action="/posts?_method=DELETE">
-          <input name="id" type="hidden" value="<%= post._id %>" />
-          <button>Delete</button>
+
+      <div class="fl-card fl-form">
+        <h2>Upload a Photo</h2>
+        <form action="/posts" method="POST" enctype='multipart/form-data' id="form">
+          <label class="form-label">Post Title</label><input type="text" name="post-title" id="post-title"
+            class="form-control" />
+          <label class="form-label">Post Body</label><textarea type="text" name="post-body" id="post-body"
+            class="form-control"></textarea>
+          <label class="form-label">Upload File</label>
+          <input class="form-control" type="file" name="post-file" id="post-file">
+          <button class="btn btn-primary"><i class="fas fa-upload"></i> Add Photo</button>
         </form>
-        </li>
-        <% }) %>
-  </ul>
-  <h2>Upload a photo</h2>
-  <form action="/posts" method="POST" enctype='multipart/form-data' id="form">
-    <label>Post Title</label><input type="text" name="post-title" id="post-title" />
-    <label>Post Body</label><input type="text" name="post-body" id="post-body" />
-    <label>Upload File</label>
-    <input class="form-control" type="file" name="post-file" id="post-file">
-    <button>Submit</button>
-  </form>
+      </div>
+
+    </div>
+  </main>
+
   <script>
     const submitForm = async (e) => {
       e.preventDefault();
@@ -62,6 +61,4 @@
 
 
   </script>
-</body>
-
-</html>
+  <%- include('../_partials/_foot.ejs') %>
