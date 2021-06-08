@@ -8,8 +8,9 @@ const upload = multer({ dest: "uploads/" });
 router.get('/', ensureAuth, postsController.getDashboard);
 router.post('/', ensureAuth, upload.array("file"), postsController.postPost);
 router.delete('/', ensureAuth, postsController.deletePost);
+router.get('/all', postsController.getAllPostsJSON);
 router.get('/feed', postsController.getFeed);
-router.get('/:id', ensureAuth, postsController.getPost);
+router.get('/:id', postsController.getPost);
 router.post('/:id/like', ensureAuth, postsController.likePost);
 
 module.exports = router;

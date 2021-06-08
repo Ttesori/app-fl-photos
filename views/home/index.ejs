@@ -1,34 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('../_partials/_head-home.ejs') %>
+  <main class="fl-main">
+    <div class="fl-container">
+      <section class="fl-photos-feed">
+      </section>
+      <div class="fl-card">
+        <h1 class="fl-card-title">Sign In</h1>
+        <% if (locals.messages.errors) { %>
+          <% messages.errors.forEach( el=> { %>
+            <div class="alert alert-danger">
+              <%= el.msg %>
+            </div>
+            <% }) %>
+              <% } %>
+                <form method="post" action="/login">
+                  <label class="form-label">Email</label>
+                  <input type="email" name="email" class="form-control">
+                  <label class="form-label">Password</label>
+                  <input type="password" name="password" class="form-control">
+                  <fieldset class="fieldset-btns">
+                    <a href="/register" class="btn btn-link">Create Account</a>
+                    <button class="et-btn-login btn btn-primary"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+                  </fieldset>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
 
-<body>
-  <h1>Home</h1>
-  <% if (locals.messages.errors) { %>
-    <% messages.errors.forEach( el=> { %>
-      <div class="alert alert-danger">
-        <%= el.msg %>
+                </form>
       </div>
-      <% }) %>
-        <% } %>
-          <form method="post" action="/login">
-            <label class="form-label">Email</label>
-            <input type="email" name="email" class="form-control">
-            <label class="form-label">Password</label>
-            <input type="password" name="password" class="form-control">
-            <fieldset>
-              <a href="/register" class="btn-link">Create Account</a>
-              <button class="et-btn-login"><i class="fas fa-sign-in-alt"></i> Sign In</button>
-            </fieldset>
 
+    </div>
+  </main>
 
-          </form>
-</body>
+  <script>
+    const els = {
+      feedEl: document.querySelector('.fl-photos-feed')
+    }
+    const getPhotos = async () => {
+      let resp = await fetch('/posts/all');
+      let photos = await resp.json();
 
-</html>
+      photos.forEach((post, i) => {
+        if (i > 3) return;
+        const section = document.createElement('section');
+        section.className = 'fl-photo';
+        const photoSpan = document.createElement('span')
+        photoSpan.className = 'fl-image';
+        const link = document.createElement('a');
+        link.href = `/posts/${post._id}`;
+        const img = document.createElement('img');
+        img.src = post.link;
+        img.alt = post.title;
+        link.appendChild(img);
+        photoSpan.appendChild(link);
+        section.appendChild(photoSpan);
+        els.feedEl.appendChild(section);
+      });
+    }
+    getPhotos();
+  </script>
+  <%- include('../_partials/_foot.ejs') %>

@@ -10,12 +10,14 @@
       </h1>
       <p>
         <%= post.body %>
-          <form method="post" action="/posts/<%= post._id %>/like">
-            <input name="likes" type="hidden" value="<%= post.likes %>" />
-            <button class="btn btn-outline-primary"><i class="fas fa-heart"></i> Like (<%= post.likes %>)</button>
-          </form>
+          <% if (user?._id) { %>
+            <form method="post" action="/posts/<%= post._id %>/like">
+              <input name="likes" type="hidden" value="<%= post.likes %>" />
+              <button class="btn btn-outline-primary"><i class="fas fa-heart"></i> Like (<%= post.likes %>)</button>
+            </form>
+            <% } %>
       </p>
-      <% if (user._id.toString()==post.user_id) { %>
+      <% if (user?._id.toString()==post.user_id) { %>
         <form method="post" action="/posts?_method=DELETE">
           <input name="id" type="hidden" value="<%= post._id %>" />
           <button class="btn btn-outline-danger"><i class="fas fa-times"></i> Delete</button>

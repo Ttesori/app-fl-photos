@@ -92,4 +92,14 @@ module.exports = {
     }
 
   },
+  getAllPostsJSON: async (req, res) => {
+    try {
+      const posts = await Post.find();
+      if (posts.length > 0) {
+        res.status(200).json(posts);
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
 }

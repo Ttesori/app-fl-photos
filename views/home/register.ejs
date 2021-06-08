@@ -1,42 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('../_partials/_head-home.ejs') %>
+  <main class="fl-main">
+    <div class="fl-container">
+      <div class="fl-card">
+        <h1 class="fl-card-title">Register</h1>
+        <% if (locals.messages.errors) { %>
+          <% messages.errors.forEach( el=> { %>
+            <div class="alert alert-danger">
+              <%= el.msg %>
+            </div>
+            <% }) %>
+              <% } %>
+                <form method="post" action="/register">
+                  <fieldset>
+                    <label class="form-label">Email</label>
+                    <input type="text" name="email" class="form-control">
+                  </fieldset>
+                  <fieldset>
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control">
+                  </fieldset>
+                  <fieldset>
+                    <label class="form-label">Confirm Password</label>
+                    <input type="password" name="confirmPassword" class="form-control">
+                  </fieldset>
+                  <fieldset class="fieldset-btns">
+                    <a href="/" class="btn btn-link">Sign In</a>
+                    <button class="et-btn-register btn btn-primary"><i class="fas fa-user-plus"></i> Create
+                      Account</button>
+                  </fieldset>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
 
-<body>
-  <h1>Register</h1>
-  <% if (locals.messages.errors) { %>
-    <% messages.errors.forEach( el=> { %>
-      <div class="alert alert-danger">
-        <%= el.msg %>
+                </form>
       </div>
-      <% }) %>
-        <% } %>
-          <form method="post" action="/register">
-            <fieldset>
-              <label class="form-label">Email</label>
-              <input type="text" name="email" class="form-control">
-            </fieldset>
-            <fieldset>
-              <label class="form-label">Password</label>
-              <input type="password" name="password" class="form-control">
-            </fieldset>
-            <fieldset>
-              <label class="form-label">Confirm Password</label>
-              <input type="password" name="confirmPassword" class="form-control">
-            </fieldset>
-            <fieldset class="et-btns-fieldset">
-              <a href="/" class="btn-link">Sign In</a>
-              <button class="et-btn-register"><i class="fas fa-user-plus"></i> Create Account</button>
-            </fieldset>
+
+    </div>
+  </main>
 
 
-          </form>
-</body>
-
-</html>
+  <%- include('../_partials/_foot.ejs') %>
