@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <a href="/logout">Log Out</a>
+  <a href="/posts/feed">Feed</a>
+  <h1>User Home</h1>
+  <h2>User Posts</h2>
+  <ul>
+    <% posts.forEach(post=> { %>
+      <> <a href="/posts/<%= post._id %>"><img src="<%= post.link %>" width="300" /></a>
+        <form method="post" action="/posts?_method=DELETE">
+          <input name="id" type="hidden" value="<%= post._id %>" />
+          <button>Delete</button>
+        </form>
+        </li>
+        <% }) %>
+  </ul>
+  <h2>Upload a photo</h2>
+  <form action="/posts" method="POST" enctype='multipart/form-data' id="form">
+    <label>Post Title</label><input type="text" name="post-title" id="post-title" />
+    <label>Post Body</label><input type="text" name="post-body" id="post-body" />
+    <label>Upload File</label>
+    <input class="form-control" type="file" name="post-file" id="post-file">
+    <button>Submit</button>
+  </form>
+  <script>
+    const submitForm = async (e) => {
+      e.preventDefault();
+      const title = document.getElementById("post-title");
+      const body = document.getElementById("post-body")
+      const file = document.getElementById("post-file");
+      const formData = new FormData();
+      formData.append("title", title.value);
+      formData.append("body", body.value);
+      formData.append("file", file.files[0]);
+      try {
+        const resp = await fetch('/posts', {
+          method: 'post',
+          body: formData
+        });
+
+        if (resp.status === 200) {
+          location.reload();
+        }
+
+
+      } catch (error) {
+
+      }
+
+    }
+    const form = document.getElementById("form");
+    form.addEventListener("submit", submitForm);
+
+
+  </script>
+</body>
+
+</html>
